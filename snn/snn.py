@@ -1,0 +1,2 @@
+class SNN(object):
+    pass
