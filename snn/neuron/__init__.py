@@ -1,3 +1,3 @@
-from snn.neuron.lif import LIF
+from snn.neuron.lif import LIFNeuron
 
-__all__ = ["LIF"]
+__all__ = ["LIFNeuron"]

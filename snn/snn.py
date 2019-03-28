@@ -1,5 +1,5 @@
 import numpy as np
-from snn.neuron import LIF
+from snn.neuron import LIFNeuron
 
 
 class SNN(object):
@@ -13,7 +13,7 @@ class SNN(object):
         self.T = 100  # 100ms time
         self.neurons = []
         for x in range(0, neurons):
-            lif = LIF()  # this does not go here
+            lif = LIFNeuron()  # this does not go here
             self.neurons.append(lif)
 
     def set_input(self, image):
