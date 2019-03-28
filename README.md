@@ -5,9 +5,6 @@ https://www.researchgate.net/publication/324270622_Spiking_neural_networks_for_h
 
 Terms
 
-
-
-
 El := resting potential
 Vt := action potential
 
