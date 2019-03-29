@@ -58,6 +58,10 @@ if __name__ == "__main__":
     image = [x / 255 for x in image]
     image = np.reshape(image, (28, 28))
 
+    plt.title("Input Image {}".format(labels[image_at - 1]))
+    plt.imshow(image, interpolation="nearest")
+    plt.savefig("plots/input_image_{}".format(labels[image_at - 1]))
+
     snn = SNN(28 * 28, kernels, 10, time=100, dt=0.0125)
     snn.guess(image)
 
@@ -75,7 +79,7 @@ if __name__ == "__main__":
                 snn.feature_maps[f_map_idx].sum(), f_map_idx
             )
         )
-        plt.savefig("plots/feature_map")
+        # plt.savefig("plots/feature_map")
 
     print(
         "size of hidden layer {}".format(
