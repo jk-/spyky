@@ -37,6 +37,10 @@ class SNN(object):
             self.neurons[key].input_voltage = pixel_voltage
         self.convolution()
 
+    def reset_neurons(self):
+        for idx, neuron in enumerate(self.neurons):
+            self.neurons[idx].reset()
+
     # 2d convolution
     def convolution(self):
         # loop through the image_idx with convolution of kernel
@@ -47,10 +51,14 @@ class SNN(object):
         # set the amount of spiked to feaature_map[key] at pixel with number
 
         print("** 2D Convolution")
+        print("Convolving on {} kernels".format(len(self.kernels)))
         feature_map_idx = 0
         for kernel_str in self.kernels:
             kernel = convert_kernel(kernel_str, 3)
             kernel_width = kernel.shape[0]
+            print("Processing kernel {}".format(kernel.flatten()))
+
+            self.reset_neurons()
 
             strides = 0
             for x in range(0, self.image_idx.shape[1] - 2):

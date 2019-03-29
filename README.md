@@ -1,3 +1,20 @@
+## Feature maps produced for the digit 4 using LIF Neurons in the SNN:
+
+![Kernel 0](plots/feature_map_0_4.png?raw=true)
+![Kernel 1](plots/feature_map_1_4.png?raw=true)
+![Kernel 2](plots/feature_map_2_4.png?raw=true)
+![Kernel 3](plots/feature_map_3_4.png?raw=true)
+![Kernel 4](plots/feature_map_4_4.png?raw=true)
+![Kernel 5](plots/feature_map_5_4.png?raw=true)
+![Kernel 6](plots/feature_map_6_4.png?raw=true)
+![Kernel 7](plots/feature_map_7_4.png?raw=true)
+![Kernel 8](plots/feature_map_8_4.png?raw=true)
+![Kernel 9](plots/feature_map_9_4.png?raw=true)
+![Kernel 10](plots/feature_map_10_4.png?raw=true)
+![Kernel 11](plots/feature_map_11_4.png?raw=true)
+
+
+
 https://www.researchgate.net/publication/324270622_Spiking_neural_networks_for_handwritten_digit_recognition-Supervised_learning_and_network_optimization?enrichId=rgreq-a04708b3adff7f03048e75efd7ad1ecf-XXX&enrichSource=Y292ZXJQYWdlOzMyNDI3MDYyMjtBUzo2MjQwMzE5Njc0ODU5NTRAMTUyNTc5MjIyMzYxNQ%3D%3D&el=1_x_3&_esc=publicationCoverPdf
 
 

@@ -14,14 +14,19 @@ class LIFNeuron(object):
         self.time = np.array([0])  # Time duration for the neuron
 
         self.t = 0  # Neuron time step
-        self.Rm = 1  # Resistance (kOhm)
-        self.Cm = 10  # Capacitance (uF)
+        self.Rm = -1.16  # Resistance (kOhm)
+        self.Cm = 15  # Capacitance (uF)
         self.tau_m = self.Rm * self.Cm  # Time constant
-        self.tau_ref = 3  # refractory period (ms)
-        self.Vth = 0.3  # spike threshold "action potential"
+        self.tau_ref = 8  # refractory period (ms)
+        self.Vth = 0.30  # spike threshold "action potential"
         self.V_spike = 1  # spike delta (V)
 
         self.input_voltage = 0
+
+    def reset(self):
+        self.Vm = np.array([0])
+        self.spikes = np.array([0])
+        self.time = np.array([0])
 
     def generate_spike(self, duration):
         Vm = np.zeros(duration)  # potential (V) trace over time
@@ -43,7 +48,6 @@ class LIFNeuron(object):
                 )
 
                 if Vm[i] >= self.Vth:
-                    print("spikes {}".format(self.__str__))
                     spikes[i] += self.V_spike
                     self.t_rest = self.t + self.tau_ref
 

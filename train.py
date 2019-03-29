@@ -23,6 +23,7 @@ if __name__ == "__main__":
     #     "0 1 0 0 1 0 0 1 0",
     #     "0 0 0 1 1 1 0 0 0",
     #     "1 0 0 0 1 0 0 0 1",
+
     #     "0 0 1 0 1 0 1 0 0",
     #     "0 1 0 0 1 1 0 0 0",
     #     "0 0 0 1 1 0 0 1 0",
@@ -35,21 +36,21 @@ if __name__ == "__main__":
     #
 
     kernels = [
-        "0 1 0 0 1 0 0 1 0",
-        "0 0 0 1 1 1 0 0 0",
-        "1 0 0 0 1 0 0 0 1",
-        "0 0 1 0 1 0 1 0 0",
-        "0 1 0 0 1 1 0 0 0",
-        "0 0 0 1 1 0 0 1 0",
-        "0 1 0 1 1 0 0 0 0",
-        "0 0 0 0 1 1 0 1 0",
-        "1 0 1 0 1 0 0 0 0",
-        "1 0 0 0 1 0 1 0 0",
-        "0 0 0 0 1 0 1 0 1",
-        "0 0 1 0 1 0 0 0 1",
+        "-1 1.16 -1 -1 1.16 -1 -1 1.16 -1",
+        "-1 -1 -1 1.16 1.16 1.16 -1 -1 -1",
+        "1.16 -1 -1 -1 1.16 -1 -1 -1 1.16",
+        "-1 -1 1.16 -1 1.16 -1 1.16 -1 -1",
+        "-1 1.16 -1 -1 1.16 1.16 -1 -1 -1",
+        "-1 -1 -1 1.16 1.16 -1 -1 1.16 -1",
+        "-1 1.16 -1 1.16 1.16 -1 -1 -1 -1",
+        "-1 -1 -1 -1 1.16 1.16 -1 1.16 -1",
+        "1.16 -1 1.16 -1 1.16 -1 -1 -1 -1",
+        "1.16 -1 -1 -1 1.16 -1 1.16 -1 -1",
+        "-1 -1 -1 -1 1.16 -1 1.16 -1 1.16",
+        "-1 -1 1.16 -1 1.16 -1 -1 -1 1.16",
     ]
 
-    image_at = 1
+    image_at = 7
     image = images[
         (image_at - 1) * rows * cols : ((image_at - 1) + 1) * rows * cols
     ]
@@ -63,6 +64,15 @@ if __name__ == "__main__":
     for idx, feature in enumerate(snn.feature_maps):
         fig = plt.figure(idx)
         plt.title("Feature Map Kernel {}".format(idx))
+        print(
+            "Found {} spikes on kernel {}".format(
+                snn.feature_maps[idx].sum(), idx
+            )
+        )
         plt.imshow(feature, interpolation="nearest")
+        plt.savefig(
+            "plots/feature_map_{}_{}".format(idx, labels[image_at - 1])
+        )
 
+    print("Label {}".format(labels[image_at - 1]))
     plt.show()
