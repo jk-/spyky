@@ -36,26 +36,29 @@ if __name__ == "__main__":
     #
 
     kernels = [
-        "-1 1.16 -1 -1 1.16 -1 -1 1.16 -1",
-        "-1 -1 -1 1.16 1.16 1.16 -1 -1 -1",
-        "1.16 -1 -1 -1 1.16 -1 -1 -1 1.16",
-        "-1 -1 1.16 -1 1.16 -1 1.16 -1 -1",
-        "-1 1.16 -1 -1 1.16 1.16 -1 -1 -1",
-        "-1 -1 -1 1.16 1.16 -1 -1 1.16 -1",
-        "-1 1.16 -1 1.16 1.16 -1 -1 -1 -1",
-        "-1 -1 -1 -1 1.16 1.16 -1 1.16 -1",
-        "1.16 -1 1.16 -1 1.16 -1 -1 -1 -1",
-        "1.16 -1 -1 -1 1.16 -1 1.16 -1 -1",
-        "-1 -1 -1 -1 1.16 -1 1.16 -1 1.16",
-        "-1 -1 1.16 -1 1.16 -1 -1 -1 1.16",
+        ".625 1.16 .625 .625 1.16 .625 .625 1.16 .625",
+        ".625 .625 .625 1.16 1.16 1.16 .625 .625 .625",
+        "1.16 .625 .625 .625 1.16 .625 .625 .625 1.16",
+        ".625 .625 1.16 .625 1.16 .625 1.16 .625 .625",
+        ".625 1.16 .625 .625 1.16 1.16 .625 .625 .625",
+        ".625 .625 .625 1.16 1.16 .625 .625 1.16 .625",
+        ".625 1.16 .625 1.16 1.16 .625 .625 .625 .625",
+        ".625 .625 .625 .625 1.16 1.16 .625 1.16 .625",
+        "1.16 .625 1.16 .625 1.16 .625 .625 .625 .625",
+        "1.16 .625 .625 .625 1.16 .625 1.16 .625 .625",
+        ".625 .625 .625 .625 1.16 .625 1.16 .625 1.16",
+        ".625 .625 1.16 .625 1.16 .625 .625 .625 1.16",
     ]
 
-    image_at = 11
+    image_at = 7
     image = images[
         (image_at - 1) * rows * cols : ((image_at - 1) + 1) * rows * cols
     ]
 
-    image = [x / 255 for x in image]
+    l0 = 0.2700
+    lp = 0.01012
+
+    image = [l0 + (lp * x) for x in image]
     image = np.reshape(image, (28, 28))
 
     # PRINTS INPUT IMAGE
@@ -67,8 +70,8 @@ if __name__ == "__main__":
     #     bbox_inches="tight",
     #     pad_inches=0,
     # )
-
-    snn = SNN(28 * 28, kernels, 10, time=100, dt=0.0125)
+    print("Input Digit: {}".format(labels[image_at - 1]))
+    snn = SNN(28 * 28, kernels, 10, time=100, dt=1)
     snn.guess(image)
 
     fig = plt.figure(figsize=(12, 12))
@@ -79,14 +82,14 @@ if __name__ == "__main__":
         f_map_idx = i - 1
         fig.add_subplot(rows, columns, i)
         plt.imshow(snn.feature_maps[f_map_idx], interpolation="nearest")
-        plt.title("Feature Map {}".format(f_map_idx), fontsize=12)
+        plt.title("Feature Map {}".format(f_map_idx + 1), fontsize=12)
 
         print(
             "Found {} spikes on kernel {}".format(
                 snn.feature_maps[f_map_idx].sum(), f_map_idx
             )
         )
-        # plt.savefig("plots/feature_map")
+        plt.savefig("plots/feature_map")
 
     print(
         "size of hidden layer {}".format(

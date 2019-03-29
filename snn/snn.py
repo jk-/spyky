@@ -34,7 +34,7 @@ class SNN(object):
         ).reshape(image.shape[0], image.shape[1])
         flatten = image.flatten()
         for key, pixel_voltage in enumerate(flatten):
-            self.neurons[key].input_voltage = pixel_voltage
+            self.neurons[key].voltage = pixel_voltage
         self.convolution()
 
     def reset_neurons(self):
@@ -56,15 +56,15 @@ class SNN(object):
         for kernel_str in self.kernels:
             kernel = convert_kernel(kernel_str, 3)
             kernel_width = kernel.shape[0]
+            kernel_flat = kernel.flatten()
             print(
                 "{}/{}: Feature Map {}".format(
-                    feature_map_idx, len(self.kernels), kernel.flatten()
+                    feature_map_idx, len(self.kernels), kernel_flat
                 )
             )
 
             self.reset_neurons()
 
-            strides = 0
             for x in range(0, self.image_idx.shape[1] - 2):
                 for y in range(0, self.image_idx.shape[0] - 2):
                     neurons_to_fire = self.image_idx[
@@ -73,12 +73,13 @@ class SNN(object):
                     neurons_to_fire = neurons_to_fire.flatten()
                     count_neuron_spikes = 0
                     for idx, neuron_idx in enumerate(neurons_to_fire):
-                        self.neurons[neuron_idx].generate_spike(self.T)
+                        self.neurons[neuron_idx].generate_spike(
+                            self.T, kernel_flat[idx]
+                        )
                         count_neuron_spikes += self.neurons[
                             neuron_idx
                         ].spikes.sum()
                     self.feature_maps[feature_map_idx][x][
                         y
                     ] = count_neuron_spikes
-                    strides += 1
             feature_map_idx += 1
