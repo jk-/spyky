@@ -58,15 +58,15 @@ if __name__ == "__main__":
     image = [x / 255 for x in image]
     image = np.reshape(image, (28, 28))
 
-    plt.title("Input Image {}".format(labels[image_at - 1]))
-    plt.imshow(image, interpolation="nearest")
-    plt.tight_layout(pad=0, w_pad=0)
-    plt.savefig(
-        "plots/input_image_{}".format(labels[image_at - 1]),
-        bbox_inches="tight",
-        pad_inches=0,
-    )
-    quit()
+    # PRINTS INPUT IMAGE
+    # plt.title("Input Image {}".format(labels[image_at - 1]))
+    # plt.imshow(image, interpolation="nearest")
+    # plt.tight_layout(pad=0, w_pad=0)
+    # plt.savefig(
+    #     "plots/input_image_{}".format(labels[image_at - 1]),
+    #     bbox_inches="tight",
+    #     pad_inches=0,
+    # )
 
     snn = SNN(28 * 28, kernels, 10, time=100, dt=0.0125)
     snn.guess(image)
