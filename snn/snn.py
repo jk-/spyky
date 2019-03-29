@@ -56,7 +56,11 @@ class SNN(object):
         for kernel_str in self.kernels:
             kernel = convert_kernel(kernel_str, 3)
             kernel_width = kernel.shape[0]
-            print("Processing feature map {}".format(kernel.flatten()))
+            print(
+                "{}/{}: Feature Map {}".format(
+                    feature_map_idx, len(self.kernels), kernel.flatten()
+                )
+            )
 
             self.reset_neurons()
 

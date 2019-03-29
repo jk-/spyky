@@ -18,7 +18,7 @@ if __name__ == "__main__":
     mnist = MNIST()
     labels, images = mnist.load_data()
     magic, size, rows, cols = mnist.image_meta
-    #
+
     # kernels = [
     #     "0 1 0 0 1 0 0 1 0",
     #     "0 0 0 1 1 1 0 0 0",
@@ -50,7 +50,7 @@ if __name__ == "__main__":
         "-1 -1 1.16 -1 1.16 -1 -1 -1 1.16",
     ]
 
-    image_at = 7
+    image_at = 11
     image = images[
         (image_at - 1) * rows * cols : ((image_at - 1) + 1) * rows * cols
     ]
