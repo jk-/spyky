@@ -17,7 +17,7 @@ python train.py
 
 ### Input Image
 
-<img src="https://github.com/jk-/snn-mnist/blob/master/plots/input_image_4.png" with="300">
+<img src="https://github.com/jk-/snn-mnist/blob/master/plots/input_image_4.png" width="200">
 
 ### Feature Maps:
 
