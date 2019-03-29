@@ -51,12 +51,12 @@ class SNN(object):
         # set the amount of spiked to feaature_map[key] at pixel with number
 
         print("** 2D Convolution")
-        print("Convolving on {} kernels".format(len(self.kernels)))
+        print("Creating {} feature maps".format(len(self.kernels)))
         feature_map_idx = 0
         for kernel_str in self.kernels:
             kernel = convert_kernel(kernel_str, 3)
             kernel_width = kernel.shape[0]
-            print("Processing kernel {}".format(kernel.flatten()))
+            print("Processing feature map {}".format(kernel.flatten()))
 
             self.reset_neurons()
 

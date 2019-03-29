@@ -60,7 +60,13 @@ if __name__ == "__main__":
 
     plt.title("Input Image {}".format(labels[image_at - 1]))
     plt.imshow(image, interpolation="nearest")
-    plt.savefig("plots/input_image_{}".format(labels[image_at - 1]))
+    plt.tight_layout(pad=0, w_pad=0)
+    plt.savefig(
+        "plots/input_image_{}".format(labels[image_at - 1]),
+        bbox_inches="tight",
+        pad_inches=0,
+    )
+    quit()
 
     snn = SNN(28 * 28, kernels, 10, time=100, dt=0.0125)
     snn.guess(image)
@@ -74,6 +80,7 @@ if __name__ == "__main__":
         fig.add_subplot(rows, columns, i)
         plt.imshow(snn.feature_maps[f_map_idx], interpolation="nearest")
         plt.title("Feature Map {}".format(f_map_idx), fontsize=12)
+
         print(
             "Found {} spikes on kernel {}".format(
                 snn.feature_maps[f_map_idx].sum(), f_map_idx
