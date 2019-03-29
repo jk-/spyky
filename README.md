@@ -16,9 +16,9 @@ python train.py
 ```
 
 ### To Do:
-    - [] Create the synaptic layer to the 10 output layers
-    - [] Train the data set
-    - [] Test the training data
+- [ ] Create the synaptic layer to the 10 output layers
+- [ ] Train the data set
+- [ ] Test the training data
 
 ### Input Image
 
