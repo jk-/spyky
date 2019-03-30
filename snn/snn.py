@@ -23,7 +23,7 @@ class SNN(object):
 
         self.image = None
         for x in range(0, neurons):
-            self.neurons.append(LIFNeuron(x, self.dt))
+            self.neurons.append(LIFNeuron(x, self.T, self.dt))
 
     def guess(self, image):
         print("* Setting up neurons")
@@ -34,7 +34,7 @@ class SNN(object):
         ).reshape(image.shape[0], image.shape[1])
         flatten = image.flatten()
         for key, pixel_voltage in enumerate(flatten):
-            self.neurons[key].voltage = pixel_voltage
+            self.neurons[key].set_current(pixel_voltage)
         self.convolution()
 
     def reset_neurons(self):
@@ -59,7 +59,7 @@ class SNN(object):
             kernel_flat = kernel.flatten()
             print(
                 "{}/{}: Feature Map {}".format(
-                    feature_map_idx, len(self.kernels), kernel_flat
+                    feature_map_idx + 1, len(self.kernels), kernel_flat
                 )
             )
 
@@ -73,9 +73,7 @@ class SNN(object):
                     neurons_to_fire = neurons_to_fire.flatten()
                     count_neuron_spikes = 0
                     for idx, neuron_idx in enumerate(neurons_to_fire):
-                        self.neurons[neuron_idx].generate_spike(
-                            self.T, kernel_flat[idx]
-                        )
+                        self.neurons[neuron_idx].spike_train(kernel_flat[idx])
                         count_neuron_spikes += self.neurons[
                             neuron_idx
                         ].spikes.sum()

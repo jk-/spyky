@@ -1,60 +1,68 @@
 import numpy as np
+from brian2.units import mV, ms, pF, nS, nA, volt, amp, pA
 
 
 class LIFNeuron(object):
-    def __init__(self, idx, step):
+    def __init__(self, idx, T, dt):
         self.type = "Leaky Integrate and Fire"
         self.label = "LIF"
         self.idx = idx
 
-        self.dt = step
-        self.t_rest = 0  # initial refactory time
-        self.Vm = np.array([0])  # Activation potential Vm(t)
-        self.spikes = np.array([0])  # output spikes (t)
-        self.time = np.array([0])  # Time duration for the neuron
+        self.T = T * ms  # simulation time [ms]
+        self.dt = dt * ms  # time step size [ms]
 
-        self.t = 0  # Neuron time step
-        self.Rm = 1  # Resistance (kOhm)
-        self.Cm = 30  # Capacitance (uF)
-        self.tau_m = self.Rm * self.Cm  # Time constant
-        self.tau_ref = 3  # refractory period (ms)
-        self.Vth = 20  # spike threshold "action potential"
-        self.V_spike = 1  # spike delta (V)
-        self.voltage = 1
+        self.Cm = 300.0 * pF  # membrane capacitance [pF]
+        self.gl = 30.0 * nS  # leak conductance [nS]
+        self.potential = 20.0 * mV  # membrane potential [mV]
+        self.El = -70.0 * mV  # resting value [mV]
+        self.T_rest = 3  # rest holding period [ms]
+        self.T_refactor = 0  # a counter for holding after spike
+        self.I = 0  # current
+
+        self.reset()
+
+    def set_current(self, pixel):
+        lp = 101.2  # minimum constant that doesn't trigger a spike
+        l0 = 2700
+        # i(k) = l0 + (k * lp)
+        _I = (2700 + (pixel * lp)) * pA
+        self.I = _I
 
     def reset(self):
-        self.Vm = np.array([0])
-        self.spikes = np.array([0])
-        self.time = np.array([0])
+        self.time = np.arange(
+            0 * ms, self.T + self.dt, self.dt
+        )  # history of steps
+        self.spikes = np.array([0])  # history of spikes
+        self.spike_count = 0
+        self.V = np.zeros(len(self.time))  # history of voltage
+        self.V[0] = self.El  # set start of voltage to resting state
+        self.fired = False
 
-    def generate_spike(self, duration, input_voltage):
-        Vm = np.zeros(duration)  # potential (V) trace over time
-        time = np.arange(
-            int(self.t / self.dt), int(self.t / self.dt) + duration
-        )
-        spikes = np.zeros(duration)  # len(time)
+    def spike_train(self, weight):
+        spikes = np.zeros(len(self.time))
+        for i in range(1, len(self.time)):
+            if not self.fired:
+                dV = (
+                    self.I - self.gl * (self.V[i - 1] * volt - self.El)
+                ) / self.Cm
+                self.V[i] = self.V[i - 1] * volt + dV * self.dt
 
-        Vm[-1] = self.Vm[-1]
+                # in case we exceed threshold
+                if self.V[i] * volt > self.potential:
+                    self.V[i - 1] = self.potential
+                    self.V[i] = self.El  # set to resting value
+                    self.fired = True
+                    spikes[i] += 1  # count spike
+            else:
+                if self.T_refactor < self.T_rest:
+                    self.T_refactor += 1
+                else:
+                    self.T_refactor = 0
+                    self.fired = False
+                self.V[i] = self.El
 
-        # Vm[i] = Vm[i-1] + (-Vm[i-1] + I*Rm) / tau_m * dt
-        for i in range(duration):
-            if self.t > self.t_rest:
-                Vm[i] = (
-                    Vm[i - 1]
-                    + (-Vm[i - 1] + (self.voltage * input_voltage) * self.Rm)
-                    / self.tau_m
-                    * self.dt
-                )
-
-                if Vm[i] >= self.Vth:
-                    spikes[i] += self.V_spike
-                    self.t_rest = self.t + self.tau_ref
-
-            self.t += self.dt
-
-        self.Vm = np.append(self.Vm, Vm)
         self.spikes = np.append(self.spikes, spikes)
-        self.time = np.append(self.time, time)
+        self.spike_count = self.spikes.sum()
 
     def __str__(self):
         return f"{self.label} ({self.idx})"
