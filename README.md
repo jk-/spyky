@@ -27,6 +27,10 @@ Now that we have a working SNN / LIF Model. Take a look at section 2. in the PDF
 
 <img src="https://github.com/jk-/snn-mnist/blob/master/plots/input_image.png" width="200">
 
+### Kernels:
+
+<img src="https://github.com/jk-/snn-mnist/blob/master/plots/kernels.png">
+
 ### Feature Maps:
 
 <img src="https://github.com/jk-/snn-mnist/blob/master/plots/feature_map.png">
