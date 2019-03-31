@@ -1,6 +1,6 @@
 import numpy as np
 from snn.neuron import LIFNeuron
-from snn.util import convert_kernel
+from snn.util import to_kernel
 
 
 class SNN(object):
@@ -54,7 +54,7 @@ class SNN(object):
         print("Creating {} feature maps".format(len(self.kernels)))
         feature_map_idx = 0
         for kernel_str in self.kernels:
-            kernel = convert_kernel(kernel_str, 3)
+            kernel = to_kernel(kernel_str, 3)
             kernel_width = kernel.shape[0]
             kernel_flat = kernel.flatten()
             print(
@@ -76,7 +76,7 @@ class SNN(object):
                         self.neurons[neuron_idx].spike_train(kernel_flat[idx])
                         count_neuron_spikes += self.neurons[
                             neuron_idx
-                        ].spikes.sum()
+                        ].spike_count
                     self.feature_maps[feature_map_idx][x][
                         y
                     ] = count_neuron_spikes

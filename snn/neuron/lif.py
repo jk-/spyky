@@ -1,5 +1,4 @@
 import numpy as np
-from brian2.units import mV, ms, pF, nS, nA, volt, amp, pA
 
 
 class LIFNeuron(object):
@@ -8,13 +7,13 @@ class LIFNeuron(object):
         self.label = "LIF"
         self.idx = idx
 
-        self.T = T * ms  # simulation time [ms]
-        self.dt = dt * ms  # time step size [ms]
+        self.T = T  # simulation time [ms]
+        self.dt = dt  # time step size [ms]
 
-        self.Cm = 300.0 * pF  # membrane capacitance [pF]
-        self.gl = 30.0 * nS  # leak conductance [nS]
-        self.potential = 20.0 * mV  # membrane potential [mV]
-        self.El = -70.0 * mV  # resting value [mV]
+        self.Cm = 300.0  # membrane capacitance [pF]
+        self.gl = 30.0  # leak conductance [nS]
+        self.potential = 20.0  # membrane potential [mV]
+        self.El = -70.0  # resting value [mV]
         self.T_rest = 3  # rest holding period [ms]
         self.T_refactor = 0  # a counter for holding after spike
         self.I = 0  # current
@@ -22,33 +21,35 @@ class LIFNeuron(object):
         self.reset()
 
     def set_current(self, pixel):
-        lp = 101.2  # minimum constant that doesn't trigger a spike
+        lp = 101.2  # scaling factor
+        # maximum constant amplitude current that doesn't trigger a spike
         l0 = 2700
         # i(k) = l0 + (k * lp)
-        _I = (2700 + (pixel * lp)) * pA
-        self.I = _I
+        self.I = np.zeros(len(self.time))
+        self.I[0:101] = l0 + (pixel * lp)
+
+    def set_current_history(self, history):
+        self.I = history
 
     def reset(self):
-        self.time = np.arange(
-            0 * ms, self.T + self.dt, self.dt
-        )  # history of steps
-        self.spikes = np.array([0])  # history of spikes
+        self.time = np.arange(0, self.T + self.dt, self.dt)  # history of steps
+        self.spikes = np.array([])  # history of spikes
         self.spike_count = 0
         self.V = np.zeros(len(self.time))  # history of voltage
         self.V[0] = self.El  # set start of voltage to resting state
         self.fired = False
 
-    def spike_train(self, weight):
+    def spike_train(self):
         spikes = np.zeros(len(self.time))
         for i in range(1, len(self.time)):
             if not self.fired:
                 dV = (
-                    self.I - self.gl * (self.V[i - 1] * volt - self.El)
+                    self.I[i] - self.gl * (self.V[i - 1] - self.El)
                 ) / self.Cm
-                self.V[i] = self.V[i - 1] * volt + dV * self.dt
+                self.V[i] = self.V[i - 1] + dV * self.dt
 
                 # in case we exceed threshold
-                if self.V[i] * volt > self.potential:
+                if self.V[i] > self.potential:
                     self.V[i - 1] = self.potential
                     self.V[i] = self.El  # set to resting value
                     self.fired = True
