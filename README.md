@@ -25,8 +25,8 @@ Now that we have a working SNN / LIF Model. Take a look at section 2. in the PDF
 
 ### Input Image
 
-<img src="https://github.com/jk-/snn-mnist/blob/master/plots/input_image_4.png" width="200">
+<img src="https://github.com/jk-/snn-mnist/blob/master/plots/input_image.png" width="200">
 
 ### Feature Maps:
 
-Because we updated the model, the image is blank!
+<img src="https://github.com/jk-/snn-mnist/blob/master/plots/feature_map.png" width="200">
