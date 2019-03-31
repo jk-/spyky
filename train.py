@@ -137,7 +137,7 @@ if __name__ == "__main__":
     # snn.guess(image)
     #
     fig = plt.figure(figsize=(12, 12))
-    fig.subplots_adjust(hspace=0.4)
+    fig.subplots_adjust(hspace=1)
     columns = 4
     rows = 3
     for i in range(1, columns * rows + 1):
@@ -145,6 +145,7 @@ if __name__ == "__main__":
         fig.add_subplot(rows, columns, i)
         plt.imshow(feature_maps[f_map_idx], interpolation="nearest")
         plt.title("Feature Map {}".format(f_map_idx + 1), fontsize=12)
+        plt.tight_layout()
     fig.tight_layout()
     plt.savefig("plots/feature_map")
     plt.show()
