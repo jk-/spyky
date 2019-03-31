@@ -39,6 +39,20 @@ if __name__ == "__main__":
     for kernel in str_kernels:
         kernels.append(to_kernel(kernel, 3))
 
+    # fig = plt.figure(figsize=(12, 12))
+    # fig.subplots_adjust(hspace=0.4)
+    # columns = 4
+    # rows = 3
+    # for i in range(1, columns * rows + 1):
+    #     f_map_idx = i - 1
+    #     fig.add_subplot(rows, columns, i)
+    #     plt.imshow(kernels[f_map_idx], interpolation="nearest")
+    #     plt.title("Kernel {}".format(f_map_idx + 1), fontsize=12)
+    # fig.tight_layout()
+    # plt.savefig("plots/kernels")
+    # plt.show()
+    # quit()
+
     outputs = [x for x in range(0, 10)]
 
     w, h = (28, 28)
