@@ -29,4 +29,4 @@ Now that we have a working SNN / LIF Model. Take a look at section 2. in the PDF
 
 ### Feature Maps:
 
-<img src="https://github.com/jk-/snn-mnist/blob/master/plots/feature_map.png" width="200">
+<img src="https://github.com/jk-/snn-mnist/blob/master/plots/feature_map.png">
