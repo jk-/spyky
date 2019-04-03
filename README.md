@@ -1,4 +1,8 @@
-## Spiking Neural Network
+## Spyky
+
+Spyky is a light-weight Machine Learning Framework for Spiking Neural Nets (SNN).
+
+### Spiking Neural Nets (SNN)
 
 A Spiking Neural Network (SNN) is a third generation artificial neural network that integrates time into the operating model. Neurons apart of the SNN represent many different types of neurons found in the brain. The difference between a SNN and a standard perceptron network, is that a Neuron in a SNN is only fired when a membrane potential reaches a specific value, called the activation potential.
 
