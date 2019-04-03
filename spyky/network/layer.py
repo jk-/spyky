@@ -25,11 +25,9 @@ class NeuronLayer(AbstractLayer):
     def __init__(self, shape: Tuple[int, int]) -> NoReturn:
         super().__init__(shape)
         self.spikes = np.zeros(self.shape)
-        self.neuron_count = self.shape[0] * self.shape[1]
+        self.neuron_count = self.spikes.size
 
     def tick(self, v_incoming: np.array) -> NoReturn:
-        # print("INCOMING!!!", v_incoming)
-        self.spikes = v_incoming
         super().tick(v_incoming)
 
     def reset(self) -> NoReturn:

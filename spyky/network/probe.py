@@ -1,6 +1,6 @@
 import numpy as np
 from abc import ABC, abstractmethod
-from typing import NoReturn, Union, Iterable, Any
+from typing import NoReturn, Union, Iterable, Any, Optional
 from spyky.network import AbstractLayer, AbstractConnection
 
 
@@ -26,27 +26,19 @@ class Probe:
         self,
         target: Union[AbstractLayer, AbstractConnection],
         variables: Iterable[str],
-        length: int,
     ) -> NoReturn:
         super().__init__()
 
         self.target = target
         self.variables = variables
-        self.length = length
         self.reset()
 
     def get(self, item: str) -> Any:
-        return self.data[item]
+        return np.array(self.data[item])
 
     def save(self) -> NoReturn:
-        for var in self.variables:
-            self.data[var] = np.expand_dims(self.target.__dict__[var], 1)
+        for v in self.variables:
+            self.data[v].append(self.target.__dict__[v].flatten())
 
     def reset(self) -> NoReturn:
-        self.data = {
-            var: np.zeros(
-                self.target.__dict__[var].size,
-                dtype=self.target.__dict__[var].dtype,
-            )
-            for var in self.variables
-        }
+        self.data = {v: [] for v in self.variables}
