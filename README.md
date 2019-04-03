@@ -12,25 +12,4 @@ We do 2D convolution on the neurons from twelve kernels to produce a total of tw
 python3 -m virtualenv env
 source env/bin/activate
 pip install -r requirements.txt
-python train.py
 ```
-
-### To Do:
-
-Now that we have a working SNN / LIF Model. Take a look at section 2. in the PDF and model the neuron and 2d convolution. Need to update membrane potentials.
-
-- [ ] Create the synaptic layer to the 10 output layers
-- [ ] Train the data set
-- [ ] Test the training data
-
-### Input Image
-
-<img src="https://github.com/jk-/snn-mnist/blob/master/plots/input_image.png" width="200">
-
-### Kernels:
-
-<img src="https://github.com/jk-/snn-mnist/blob/master/plots/kernels.png">
-
-### Feature Maps:
-
-<img src="https://github.com/jk-/snn-mnist/blob/master/plots/feature_map.png">
