@@ -17,3 +17,4 @@ pip install -r requirements.txt
 ## 25 Integrate-and-Fire Neurons
 
 <img src="plots/5_5_voltage.png"/>
+<img src="plots/5_5_spikes.png"/>
