@@ -18,7 +18,7 @@ source env/bin/activate
 pip install -r requirements.txt
 ```
 
-## 25 Integrate-and-Fire Neurons
+### 25 Integrate-and-Fire Neurons with Voltage and Spike Trains
 
 <img src="plots/5_5_voltage.png"/>
 <img src="plots/5_5_spikes.png"/>
