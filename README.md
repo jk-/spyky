@@ -10,6 +10,11 @@ In this example of training a SNN on the MNIST hand-written digit set, we incorp
 
 We do 2D convolution on the neurons from twelve kernels to produce a total of twelve feature maps. The hidden layer size is 8,112 connections (26 * 26 * 12). There are a total of 10 output layers (digits 0 - 9). I will implement an inhibitor on the final output layers using a Winner-Take-All (WTA) approach.
 
+### To Do:
+
+- [ ] GPU Support
+- [ ] Examples
+
 ### To Run:
 ```
 ./data.sh
