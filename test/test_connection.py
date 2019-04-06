@@ -34,12 +34,12 @@ class TestConnection:
         bias = np.array([1, 1, 1])
 
         connection = Connection(
-            NeuronLayer((1, 1)),
-            NeuronLayer((1, 1)),
+            NeuronLayer((1, 3)),
+            NeuronLayer((1, 3)),
             weights=weights,
             bias=bias,
         )
         spikes = np.array([0, 1, 0])
         weights_calc = connection.calculate(spikes)
 
-        assert all([a == b for a, b in zip(weights_calc, [2.0, 2.0, 2.0])])
+        assert all([a == b for a, b in zip(weights_calc[0], [2.0, 2.0, 2.0])])

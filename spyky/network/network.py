@@ -62,5 +62,5 @@ class Network:
 
             inpts.update(self.get_inputs())
 
-            for m in self.probes:
-                self.probes[m].save()
+            for p in self.probes:
+                self.probes[p].save()

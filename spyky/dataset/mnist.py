@@ -18,7 +18,7 @@ class MNIST(object):
         self.label_meta = None
         self.image_meta = None
 
-    def load_data(self):
+    def load_data(self) -> Union[array, array]:
         return self.load_labels(), self.load_images()
 
     def load_labels(self):

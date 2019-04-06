@@ -39,7 +39,7 @@ class IFNeuron(NeuronLayer):
 
         super().tick(v_incoming)
 
-    def reset(self) -> None:
+    def reset(self) -> NoReturn:
         super().reset()
         self.refractor_count = np.zeros(self.shape)
         self.v = self.v_rest * np.ones(self.shape)
